@@ -7,15 +7,11 @@ import os
 
 path = "./data"
 
-header = ["EnvelopeId", "ParticipantName", "DOB", "Address", "Phone Number", "ParentName", "Phone Number_P1", "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1",
-          "Emergency Name 2", "Phone Number_Em2", "Radio Group_Media", "minor", "type", "file_name"]
+header = ["ParticipantName", "Gender", "Email", "DOB", "Age", "Address", "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1", "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1",
+          "Emergency Name 2", "Phone Number_Em2", "Minor/Adult", "Media",  "type", "file_name", "EnvelopeId"]
 
 allergy_header = ["Allegry Type_other", "Allegry Food", "Allegry Signs_hm", "Allegry Signs_where", "Allegry Animal",
-                  "Allegry Treatment", "Allegry Treatment_2", "Allegry Insect", "Allegry Type_other", "Allergy Dr Name"
-                  "Allergy Phone Number", "Allergy Type_Insect", "Allergy Type_Food", "Allergy Type_Anima",
-                  "Allergy Type_other", "Allergy Signs_swelling", "Allergy Signs_skin", "Allergy Signs_nausea",
-                  "Allergy Signs_breathing", "Allergy Signs_other", "Allergy Signs_rash", "Allergy Signs_swallowing",
-                  "Allergy Signs_consious"]
+                  "Allegry Treatment", "Allegry Treatment_2", "Allegry Insect"]
 
 
 def open_file(df):
@@ -54,9 +50,9 @@ def open_file(df):
                 if field == "DOB":
                     dob = str(field_val)
                     if calculate_age(dob) > 17:
-                        data_json.update({"minor": "Adult"})
+                        data_json.update({"Minor/Adult": "Adult"})
                     else:
-                        data_json.update({"minor": "Minor"})
+                        data_json.update({"Minor/Adult": "Minor"})
                 break
 
     return data_json
