@@ -118,7 +118,7 @@ def get_age(df):
             else:
                 return "Minor"
 
-
+'''
 def cleanUpFolder():
     """
     delete all existing files in the volunteers & participants folders
@@ -145,7 +145,7 @@ def organize():
     """
     print('organize')
     global path
-    cleanUpFolder()
+    #cleanUpFolder()
     for file in listdir(path):
         if file.endswith(".csv"):
             df = pd.read_csv(f"./data/{file}", usecols=['EnvelopeId', 'Field', 'Value']).fillna("")
@@ -168,32 +168,34 @@ def organize():
             except FileExistsError as e:
                 print(f"deleting {source}")
                 os.remove(source)
-
+'''
 
 if __name__ == '__main__':
     print("Running ...")
-    organize()
+    #organize()
     info_minor = []
     info = []
 
+    '''
     t = ["participants/Minor", "participants/Adult", "/volunteers/Minor", "volunteers/Adult"]
 
     for folder in t:
-        for file in listdir(f'{path}/{folder}'):
-            if file.endswith(".csv"):
-                file_data = {}
-                df = pd.read_csv(f"{path}/{folder}/{file}", usecols=['EnvelopeId', 'Field', 'Value']).fillna("")
-                file_data = open_file(df)
-                file_data["file_name"] = f"{path}/{folder}/{file}"
+    '''
+    for file in listdir(f'{path}/'):
+        if file.endswith(".csv"):
+            file_data = {}
+            df = pd.read_csv(f"{path}/{file}", usecols=['EnvelopeId', 'Field', 'Value']).fillna("")
+            file_data = open_file(df)
+            file_data["file_name"] = f"{path}/{file}"
 
-                if "participant-registration" in file:
-                    file_data["type"] = "participant"
-                    file_data.update(get_allergy_info(df))
+            if "participant-registration" in file:
+                file_data["type"] = "participant"
+                file_data.update(get_allergy_info(df))
 
-                elif "internal-policies" in file:
-                    file_data["type"] = "volunteers"
+            elif "internal-policies" in file:
+                file_data["type"] = "volunteers"
 
-                info.append(file_data)
+            info.append(file_data)
 
     # allergy info to the file
     [header.append(i) for i in allergy_header]
@@ -202,3 +204,4 @@ if __name__ == '__main__':
         writer.writeheader()
         writer.writerows(info)
 
+    print("DONE!")
