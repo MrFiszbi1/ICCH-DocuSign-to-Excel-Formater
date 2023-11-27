@@ -7,8 +7,10 @@ import os
 
 path = "./data"
 
-header = ["ParticipantName", "Gender", "Email", "DOB", "Age", "Address", "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1", "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1",
-          "Emergency Name 2", "Phone Number_Em2", "Minor/Adult", "Media",  "type", "file_name", "EnvelopeId"]
+header = ["Participant Name", "Gender", "Email", "DOB", "Age", "Address", "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1", "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1", "Emergency Name 2", "Phone Number_Em2", "Minor/Adult", "Media",  "type", "file_name", "EnvelopeId"]
+
+volunteer_header = ["Volunteer Name","Gender","Email","Training","Background Chk","Comments","DOB","Age","Address","Phone Number","Emergency Name 1","Phone Number_Em1","Emergency Name 2","Phone Number_Em2","Minor/Adult","Parent Name","Parent's email","Phone Number_P1","Phone Number_P2","EnvelopeId"]
+
 
 allergy_header = ["Allegry Type_other", "Allegry Food", "Allegry Signs_hm", "Allegry Signs_where", "Allegry Animal",
                   "Allegry Treatment", "Allegry Treatment_2", "Allegry Insect"]
