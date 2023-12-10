@@ -7,14 +7,34 @@ import os
 
 path = "./data"
 
-header = ["Participant Name", "Gender", "Email", "DOB", "Age", "Address", "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1", "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1", "Emergency Name 2", "Phone Number_Em2", "Minor/Adult", "Media",  "type", "file_name", "EnvelopeId"]
-
-volunteer_header = ["Volunteer Name","Gender","Email","Training","Background Chk","Comments","DOB","Age","Address","Phone Number","Emergency Name 1","Phone Number_Em1","Emergency Name 2","Phone Number_Em2","Minor/Adult","Parent Name","Parent's email","Phone Number_P1","Phone Number_P2","EnvelopeId"]
-
+header = []
 
 allergy_header = ["Allegry Type_other", "Allegry Food", "Allegry Signs_hm", "Allegry Signs_where", "Allegry Animal",
                   "Allegry Treatment", "Allegry Treatment_2", "Allegry Insect"]
 
+
+def check_form_type(df):
+    # Check if "Participant Name" is present in the "Field" column
+    if "Participant Name" in df["Field"].values:
+        return [
+            "Participant Name", "Gender", "Email", "DOB", "Age", "Address",
+            "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1",
+            "ParentName_2", "Phone Number_P2", "Emergency Name 1", "Phone Number_Em1",
+            "Emergency Name 2", "Phone Number_Em2", "Minor/Adult", "Media",
+            "type", "file_name"
+        ] + allergy_header + ["EnvelopeId"]
+    # Check if "Volunteer Name" is present in the "Field" column
+    elif "Volunteer Name" in df["Field"].values:
+        return [
+            "Volunteer Name", "Gender", "Email", "Training", "Background Chk",
+            "Comments", "DOB", "Age", "Address", "Phone Number", "Emergency Name 1",
+            "Phone Number_Em1", "Emergency Name 2", "Phone Number_Em2", "Minor/Adult",
+            "Parent Name", "Parent's email", "Phone Number_P1", "Phone Number_P2",
+            "EnvelopeId"
+        ]
+    else:
+        return None  # Neither "Participant Name" nor "Volunteer Name" found in the "Field" column
+    
 
 def open_file(df):
     """
@@ -23,7 +43,16 @@ def open_file(df):
     :param df: panda data frame
     :return:
     """
+    global header
     data_json = {}
+    header = check_form_type(df)
+    """    
+    if form_type is not None:
+        header = form_type
+        if "Participant Name" in form_type:
+            header += allergy_header  # Append allergy_header only if form type is "participant"
+    """
+    
     data = dict.fromkeys(header, False)
     data_json.update({"EnvelopeId": df['EnvelopeId'][1]})
     for i in range(len(df['Field'])):
@@ -40,8 +69,7 @@ def open_file(df):
                 field_name = "Emergency Name 1"
             if field_name == "Emr_Name_2" or field_name == "Emer_Name_2":
                 field_name = "Emergency Name 2"
-            if field_name == "Participant Name" or field_name == "Volunteer Name":
-                field_name = "ParticipantName"
+            #if field_name == "Participant Name" or field_name == "Volunteer Name": field_name = "ParticipantName"
 
             if not data[field] and (field_name == field):
                 data[field] = True
@@ -188,19 +216,18 @@ if __name__ == '__main__':
             file_data = {}
             df = pd.read_csv(f"{path}/{file}", usecols=['EnvelopeId', 'Field', 'Value']).fillna("")
             file_data = open_file(df)
-            file_data["file_name"] = f"{path}/{file}"
+            #file_data["file_name"] = f"{path}/{file}"
 
             if "participant-registration" in file:
-                file_data["type"] = "participant"
+                #file_data["type"] = "participant"
                 file_data.update(get_allergy_info(df))
 
-            elif "internal-policies" in file:
-                file_data["type"] = "volunteers"
+            #elif "internal-policies" in file: file_data["type"] = "volunteers"
 
             info.append(file_data)
 
     # allergy info to the file
-    [header.append(i) for i in allergy_header]
+    #[header.append(i) for i in allergy_header]
     with open('all_data.csv', 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=header)
         writer.writeheader()
