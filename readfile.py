@@ -15,7 +15,7 @@ allergy_header = ["Allegry Type_other", "Allegry Food", "Allegry Signs_hm", "All
 
 def check_form_type(df):
     # Check if "Participant Name" is present in the "Field" column
-    if "Participant Name" in df["Field"].values:
+    if "Participant Name" in df["Field"].values or "ParticipantName" in df["Field"].values:
         return [
             "Participant Name", "Gender", "Email", "DOB", "Age", "Address",
             "Phone Number", "ParentName", "Parent's Email", "Phone Number_P1",
@@ -69,7 +69,7 @@ def open_file(df):
                 field_name = "Emergency Name 1"
             if field_name == "Emr_Name_2" or field_name == "Emer_Name_2":
                 field_name = "Emergency Name 2"
-            #if field_name == "Participant Name" or field_name == "Volunteer Name": field_name = "ParticipantName"
+            if field_name == "ParticipantName" or field_name == "Volunteer Name": field_name = "Participant Name"
 
             if not data[field] and (field_name == field):
                 data[field] = True
