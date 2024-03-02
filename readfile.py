@@ -73,6 +73,8 @@ def open_file(df):
                 field_name = "Participant Name"
             if field_name == "VolunteerName":
                 field_name = "Volunteer Name"
+            if field_name == "Radio Group_Media":
+                field_name = "Media"
 
             if not data[field] and (field_name == field):
                 data[field] = True
