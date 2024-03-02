@@ -24,7 +24,7 @@ def check_form_type(df):
             "type", "file_name"
         ] + allergy_header + ["EnvelopeId"]
     # Check if "Volunteer Name" is present in the "Field" column
-    elif "Volunteer Name" in df["Field"].values:
+    elif "Volunteer Name" in df["Field"].values or "VolunteerName" in df["Field"].values:
         return [
             "Volunteer Name", "Gender", "Email", "Training", "Background Chk",
             "Comments", "DOB", "Age", "Address", "Phone Number", "Emergency Name 1",
@@ -69,7 +69,10 @@ def open_file(df):
                 field_name = "Emergency Name 1"
             if field_name == "Emr_Name_2" or field_name == "Emer_Name_2":
                 field_name = "Emergency Name 2"
-            if field_name == "ParticipantName" or field_name == "Volunteer Name": field_name = "Participant Name"
+            if field_name == "ParticipantName": 
+                field_name = "Participant Name"
+            if field_name == "VolunteerName":
+                field_name = "Volunteer Name"
 
             if not data[field] and (field_name == field):
                 data[field] = True
